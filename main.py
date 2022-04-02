@@ -12,16 +12,14 @@ def StringXor(str1, str2):
 def EncryptUid(uid):
     RandomLetter = random.choice(string.ascii_letters)
     NewUid = RandomLetter + uid
-
-    print ("RANDOM LETTER :  " + RandomLetter)
     XoredString = RandomLetter + StringXor(NewUid, RandomLetter)
-
 
     return b64encode(XoredString.encode('utf-8'))
 
 def DecryptUid(uid):
     DecryptedUid = b64decode(uid).decode('utf-8')
     UnxoredUId = StringXor(DecryptedUid, DecryptedUid[0])
+
     return UnxoredUId[2:]
 
 def AddArg(URL, argName, uid):
@@ -29,11 +27,13 @@ def AddArg(URL, argName, uid):
     query = parse_qs(ParsedURL.query, True)
     query[argName] = uid
     res = ParseResult(ParsedURL.scheme, ParsedURL.hostname, ParsedURL.path, ParsedURL.params, urlencode(query, doseq=True), ParsedURL.fragment)
+
     return res.geturl()
 
 def GetArg(URL, argName):
     ParsedURL = urlparse(URL)
     query = parse_qs(ParsedURL.query, True)
+
     return query.get(argName)[0]
 
 def RemoveArg(URL, argName):
@@ -41,11 +41,15 @@ def RemoveArg(URL, argName):
     query = parse_qs(ParsedURL.query, True)
     query.pop(argName)
     res = ParseResult(ParsedURL.scheme, ParsedURL.hostname, ParsedURL.path, ParsedURL.params, urlencode(query), ParsedURL.fragment)
+
     return res.geturl()
 
 def DecryptUidFromURL(URL, argName):
+
     return DecryptUid(GetArg(URL, argName))
+
 def EncryptUidToURL(URL, argName, uid):
+
     return AddArg(URL, argName, EncryptUid(uid))
 
 
