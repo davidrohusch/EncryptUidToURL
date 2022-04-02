@@ -1,0 +1,2 @@
+# EncryptUidToURL
+Zakódování argumentu URL
