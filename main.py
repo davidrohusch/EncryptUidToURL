@@ -1,28 +1,35 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from urllib.parse import urlparse, parse_qs, urlencode, urlsplit, DefragResult, ParseResult
 
 
 def EncryptUid(uid):
-    pass
+    return uid
 def DecryptUid(uid):
-    pass
+    return uid
 
-def addUid(URL, uid):
+def AddArg(URL, argName, uid):
+    ParsedURL = urlparse(URL)
+    query = parse_qs(ParsedURL.query)
+    query[argName] = uid
     pass
+def GetArg(URL, argName):
+    ParsedURL = urlparse(URL)
+    query = parse_qs(ParsedURL.query)
+    return query.get(argName)
 
+def RemoveArg(URL, argName):
+    ParsedURL = urlparse(URL)
+    query = parse_qs(ParsedURL.query)
+    query.pop(argName)
+    res = ParseResult(ParsedURL.scheme, ParsedURL.hostname, ParsedURL.path, ParsedURL.params, urlencode(query), ParsedURL.fragment)
+    return URL
 
 def DecryptUidFromURL(URL, argName):
-    pass
+    return DecryptUid(GetArg(URL, argName, False))
 def EncryptUidToURL(URL, argName, uid):
+    return AddArg(URL, argName, EncryptUid(uid))
+
+
+if __name__ == '__main__':
+
     pass
 
-
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-   pass
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
