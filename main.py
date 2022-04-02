@@ -81,13 +81,14 @@ def RemoveArg(URL, argName):
     Počítá se s validnímy parametry.
     V URL je uložen řetězec s URL adresou.
     V argName název argumentu
+    Pokud argument neexistuje, funkce hodí vyjímku 'KeyError'
 
     Vrací nově vzniklý URL s odebraným argumentem. Může dojít k neškodnému reformátování URL adresy.
     """
     ParsedURL = urlparse(URL)
     query = parse_qs(ParsedURL.query, True)
     query.pop(argName)
-    res = ParseResult(ParsedURL.scheme, ParsedURL.hostname, ParsedURL.path, ParsedURL.params, urlencode(query), ParsedURL.fragment)
+    res = ParseResult(ParsedURL.scheme, ParsedURL.hostname, ParsedURL.path, ParsedURL.params, urlencode(query, doseq=True), ParsedURL.fragment)
 
     return res.geturl()
 
@@ -117,5 +118,6 @@ def EncryptUidToURL(URL, argName, uid):
 
 
 if __name__ == '__main__':
+    print(EncryptUidToURL("http://www.seznam.cz", "pes", "cool"))
     pass
 
