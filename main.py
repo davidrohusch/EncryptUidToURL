@@ -118,6 +118,5 @@ def EncryptUidToURL(URL, argName, uid):
 
 
 if __name__ == '__main__':
-    print(EncryptUidToURL("http://www.seznam.cz", "pes", "cool"))
     pass
 
